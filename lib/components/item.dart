@@ -66,8 +66,8 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                         style: const ButtonStyle(
                             backgroundColor:
                                 WidgetStatePropertyAll(Colors.red)),
-                        onPressed: () {
-                          ref
+                        onPressed: () async {
+                          await ref
                               .read(todosNotifierProvider.notifier)
                               .deleteTodo(widget.todo);
                         },

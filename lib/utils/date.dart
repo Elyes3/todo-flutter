@@ -1,7 +1,14 @@
+import 'package:intl/intl.dart';
+
 int getDateTime(DateTime dateTime) {
-  DateTime now = DateTime.now();
-  DateTime midnight = DateTime(now.year, now.month, now.day);
+  DateTime midnight = DateTime(dateTime.year, dateTime.month, dateTime.day);
   int millis = midnight.millisecondsSinceEpoch;
-  print(millis);
   return millis;
+}
+
+String dateFromMillis(int millis) {
+  print(millis);
+  DateTime date = DateTime.fromMillisecondsSinceEpoch(millis);
+  String formattedDate = DateFormat('dd-MM-yyyy').format(date);
+  return formattedDate;
 }
