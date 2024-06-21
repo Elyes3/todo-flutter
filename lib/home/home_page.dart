@@ -29,6 +29,14 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Center(
             child: ListView(
               children: <Widget>[
+                const Text(
+                  'Choose a day for your Todos',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.deepPurple),
+                ),
                 TableCalendar(
                   // disable scrolling for tablecalendar
                   availableGestures: AvailableGestures.none,
@@ -48,6 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     print(selectedDay);
                     int millis = getDateTime(selectedDay);
                     print('millis : $millis');
+                    
                     Modular.to.pushNamed('/todos/$millis');
                     ref.read(todosNotifierProvider.notifier).getTodos(millis);
                   },

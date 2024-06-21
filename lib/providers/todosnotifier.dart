@@ -1,24 +1,24 @@
 import 'dart:core';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoflutter/models/result.dart';
-import 'package:todoflutter/models/todo.dart';
-import 'package:todoflutter/todos/todos_controller.dart';
+import 'package:todoflutter/todos/todo_model.dart';
+import 'package:todoflutter/todos/todos_service.dart';
 
-TodosController todosController = TodosController();
+TodosService todosService = TodosService();
 
 class TodoNotifier extends AsyncNotifier<List<Todo>> {
 
 
   getTodos(int millis) async {
     state = const AsyncValue.loading();
-    Result<List<Todo>> res = await todosController.getTodos(millis);
+    Result<List<Todo>> res = await todosService.getTodos(millis);
     List<Todo> todos = res.data!;
     state = AsyncValue.data(todos);
   }
 
   createTodo(Todo todo) async {
     state = const AsyncValue.loading();
-    Result<Todo> res = await todosController.createTodo(todo);
+    Result<Todo> res = await todosService.createTodo(todo);
     Todo createdTodo = res.data!;
     List<Todo> todos = state.value!;
     state = AsyncValue.data(
@@ -27,7 +27,7 @@ class TodoNotifier extends AsyncNotifier<List<Todo>> {
 
   updateTodo(Todo todo) async {
     state = const AsyncValue.loading();
-    Result<Todo> res = await todosController.updateTodo(todo);
+    Result<Todo> res = await todosService.updateTodo(todo);
     Todo updatedTodo = res.data!;
     List<Todo> todos = state.value!;
     state = AsyncValue.data(
@@ -36,7 +36,7 @@ class TodoNotifier extends AsyncNotifier<List<Todo>> {
 
   deleteTodo(Todo todo) async {
     state = const AsyncValue.loading();
-    await todosController.deleteTodo(todo);
+    await todosService.deleteTodo(todo);
     List<Todo> todos = state.value!;
     state = AsyncValue.data([...todos.where((Todo t) => t.id != todo.id)]);
   }

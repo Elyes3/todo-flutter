@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'dart:core';
 
-class TodosController {
+class TodosService {
   final String? _baseUrl = dotenv.env['BASE_URL'];
   final String _endpoint = 'todos';
   Future<Result<List<Todo>>> getTodos(int millis) async {
