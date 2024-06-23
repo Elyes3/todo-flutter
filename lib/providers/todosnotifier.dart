@@ -8,7 +8,7 @@ TodosService todosService = TodosService();
 
 class TodoNotifier extends AsyncNotifier<List<Todo>> {
 
-
+  // immutability
   getTodos(int millis) async {
     state = const AsyncValue.loading();
     Result<List<Todo>> res = await todosService.getTodos(millis);
@@ -33,7 +33,14 @@ class TodoNotifier extends AsyncNotifier<List<Todo>> {
     state = AsyncValue.data(
         [...todos.where((Todo t) => t.id != todo.id), updatedTodo]);
   }
-
+  completeTodo(Todo todo) async {
+    state = const AsyncValue.loading();
+    Result<Todo> res = await todosService.completeTodo(todo);
+    Todo updatedTodo = res.data!;
+    List<Todo> todos = state.value!;
+    state = AsyncValue.data(
+        [...todos.where((Todo t) => t.id != todo.id), updatedTodo]);
+  }
   deleteTodo(Todo todo) async {
     state = const AsyncValue.loading();
     await todosService.deleteTodo(todo);

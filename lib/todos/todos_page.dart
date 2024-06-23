@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoflutter/components/todolist.dart';
-import 'package:todoflutter/models/todo.dart';
+import 'package:todoflutter/providers/todosfilter.dart';
+import 'package:todoflutter/todos/todo_model.dart';
 import 'package:todoflutter/providers/todosnotifier.dart';
 import 'package:todoflutter/utils/date.dart';
 
@@ -71,7 +72,8 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                       Todo todo = Todo(
                           id: '',
                           description: _todoDescription,
-                          millis: widget.millis);
+                          millis: widget.millis,
+                          completed: false);
                       print("CLICKED");
                       ref.read(todosNotifierProvider.notifier).createTodo(todo);
                       setState(() {
@@ -94,6 +96,41 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                         fontSize: 25,
                         color: Colors.deepPurple),
                   )),
+              SegmentedButton<TodosFilter>(
+                segments: const <ButtonSegment<TodosFilter>>[
+                  ButtonSegment<TodosFilter>(
+                      value: TodosFilter.all,
+                      label: Text(
+                        'All',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      )),
+                  ButtonSegment<TodosFilter>(
+                      value: TodosFilter.completed,
+                      label: Text(
+                        'Done',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      )),
+                  ButtonSegment<TodosFilter>(
+                      value: TodosFilter.uncompleted,
+                      label: Text(
+                        'In progress',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      )),
+                ],
+                selected: <TodosFilter>{ref.read(todosFilter.notifier).state},
+                onSelectionChanged: (Set<TodosFilter> newSelection) {
+                  setState(() {
+                    ref.read(todosFilter.notifier).state = newSelection.first;
+                  });
+                },
+              ),
+              const SizedBox(height: 25),
               const TodoList()
             ])));
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todoflutter/models/todo.dart';
+import 'package:todoflutter/todos/todo_model.dart';
 import 'package:todoflutter/providers/todosnotifier.dart';
 
 class TodoItem extends ConsumerStatefulWidget {
@@ -19,6 +19,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
     return GestureDetector(
         onTap: () {
           setState(() {
+            _description = widget.todo.description;
             _isToggled = true;
           });
 
@@ -34,34 +35,52 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    !_isToggled
-                        ? Text(widget.todo.description)
-                        : Expanded(
-                            child: SizedBox(
-                                height: 40,
-                                child: TextFormField(
-                                  initialValue: widget.todo.description,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _description = value;
-                                    });
-                                  },
-                                  onTapOutside: (value) {
-                                    setState(() {
-                                      _isToggled = false;
-                                    });
-                                    if (_description !=
-                                        widget.todo.description) {
-                                      Todo updateTodo = Todo(
-                                          id: widget.todo.id,
-                                          description: _description,
-                                          millis: widget.todo.millis);
-                                      ref
-                                          .read(todosNotifierProvider.notifier)
-                                          .updateTodo(updateTodo);
-                                    }
-                                  },
-                                ))),
+                    Expanded(
+                        child: Row(children: <Widget>[
+                      Checkbox(
+                          value: widget.todo.completed,
+                          onChanged: (value) {
+                            Todo todo = Todo(
+                                description: widget.todo.description,
+                                id: widget.todo.id,
+                                millis: widget.todo.millis,
+                                completed: value!);
+                            ref
+                                .read(todosNotifierProvider.notifier)
+                                .completeTodo(todo);
+                          }),
+                      !_isToggled
+                          ? Text(widget.todo.description)
+                          : Expanded(
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 50,
+                                  child: TextFormField(
+                                    initialValue: widget.todo.description,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _description = value;
+                                      });
+                                    },
+                                    onTapOutside: (value) {
+                                      setState(() {
+                                        _isToggled = false;
+                                      });
+                                      if (_description !=
+                                          widget.todo.description) {
+                                        Todo updateTodo = Todo(
+                                            id: widget.todo.id,
+                                            description: _description,
+                                            millis: widget.todo.millis,
+                                            completed: widget.todo.completed);
+                                        ref
+                                            .read(
+                                                todosNotifierProvider.notifier)
+                                            .updateTodo(updateTodo);
+                                      }
+                                    },
+                                  )))
+                    ])),
                     ElevatedButton(
                         style: const ButtonStyle(
                             backgroundColor:

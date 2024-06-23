@@ -1,5 +1,5 @@
 import 'package:todoflutter/models/result.dart';
-import 'package:todoflutter/models/todo.dart';
+import 'package:todoflutter/todos/todo_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
@@ -43,10 +43,10 @@ class TodosService {
   }
 
   Future<Result<Todo>> updateTodo(Todo todo) async {
-    var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}');
+    var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}/description');
     print(url);
     Map<String, dynamic> jsonTodo = todo.toJson();
-    var response = await http.put(url,
+    var response = await http.patch(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -61,6 +61,24 @@ class TodosService {
     }
   }
 
+  Future<Result<Todo>> completeTodo(Todo todo) async {
+    var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}/completed');
+    print(url);
+    Map<String, dynamic> jsonTodo = todo.toJson();
+    var response = await http.patch(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(jsonTodo));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      Todo todo = Todo.fromJson(data["todo"]);
+      return Result(data: todo, message: data["message"]);
+    } else {
+      Map<String, dynamic> data = json.decode(response.body);
+      return Result(error: data["error"]);
+    }
+  }
   Future<Result<Todo>> deleteTodo(Todo todo) async {
     var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}');
     print(url);
