@@ -27,7 +27,14 @@ class TodoList extends ConsumerWidget {
     final todosAsyncValue = ref.watch(todosNotifierProvider);
     return todosAsyncValue.when(
       data: (todos) {
-        return ListView.builder(
+        return todos.isEmpty ? 
+          const Column(crossAxisAlignment: CrossAxisAlignment.center, 
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.folder_off,size: 75,color: Colors.deepPurple,),
+            Text("No todos found for this day!",style: TextStyle(fontSize: 20,color: Colors.deepPurple, fontWeight: FontWeight.bold),),
+          ],)
+         :  ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: filteredData.length,
           scrollDirection: Axis.vertical,

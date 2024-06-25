@@ -133,7 +133,11 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                 },
               ),
               const SizedBox(height: 25),
-              const TodoList()
+            Container(
+              height: MediaQuery.of(context).size.height*0.5,
+              width : MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: const TodoList())
             ])));
   }
 }
