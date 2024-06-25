@@ -48,15 +48,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
-                      print(selectedDay);
                       _selectedDay = selectedDay;
                       _focusedDay =
                           focusedDay; // update `_focusedDay` here as well
                     });
-                    print(selectedDay);
                     int millis = getDateTime(selectedDay);
-                    print('millis : $millis');
-                    
                     Modular.to.pushNamed('/todos/$millis');
                     ref.read(todosNotifierProvider.notifier).getTodos(millis);
                   },

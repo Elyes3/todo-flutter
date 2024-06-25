@@ -41,7 +41,6 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                             onChanged: (value) {
                               setState(() {
                                 _todoDescription = value;
-                                print(_todoDescription);
                               });
                             },
                             decoration: const InputDecoration(
@@ -68,7 +67,6 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                     ),
                   ),
                   onPressed: () {
-                    print(_todoDescription);
                     if (_todoDescription.isNotEmpty) {
                       _controller.clear();
                       Todo todo = Todo(
@@ -76,7 +74,6 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                           description: _todoDescription,
                           millis: widget.millis,
                           completed: false);
-                      print("CLICKED");
                       ref.read(todosNotifierProvider.notifier).createTodo(todo);
                       setState(() {
                         _todoDescription = '';

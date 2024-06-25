@@ -22,8 +22,6 @@ class _TodoItemState extends ConsumerState<TodoItem> {
             _description = widget.todo.description;
             _isToggled = true;
           });
-
-          print(_isToggled);
         },
         child: Container(
             margin: const EdgeInsets.only(bottom: 10),

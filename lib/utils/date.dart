@@ -7,7 +7,6 @@ int getDateTime(DateTime dateTime) {
 }
 
 String dateFromMillis(int millis) {
-  print(millis);
   DateTime date = DateTime.fromMillisecondsSinceEpoch(millis);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;

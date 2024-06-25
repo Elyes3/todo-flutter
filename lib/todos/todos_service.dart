@@ -10,11 +10,9 @@ class TodosService {
   final String _endpoint = 'todos';
   Future<Result<List<Todo>>> getTodos(int millis) async {
     var url = Uri.parse('$_baseUrl/$_endpoint?millis=$millis');
-    print("TEST");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      print("200 $data");
       List<Todo> todos = Todo.listFromJson(data);
       return Result(data: todos);
     } else {
@@ -25,7 +23,6 @@ class TodosService {
 
   Future<Result<Todo>> createTodo(Todo todo) async {
     var url = Uri.parse('$_baseUrl/$_endpoint');
-    print(url);
     Map<String, dynamic> jsonTodo = todo.toJson();
     var response = await http.post(url,
         headers: <String, String>{
@@ -44,7 +41,6 @@ class TodosService {
 
   Future<Result<Todo>> updateTodo(Todo todo) async {
     var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}/description');
-    print(url);
     Map<String, dynamic> jsonTodo = todo.toJson();
     var response = await http.patch(url,
         headers: <String, String>{
@@ -63,7 +59,6 @@ class TodosService {
 
   Future<Result<Todo>> completeTodo(Todo todo) async {
     var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}/completed');
-    print(url);
     Map<String, dynamic> jsonTodo = todo.toJson();
     var response = await http.patch(url,
         headers: <String, String>{
@@ -81,7 +76,6 @@ class TodosService {
   }
   Future<Result<Todo>> deleteTodo(Todo todo) async {
     var url = Uri.parse('$_baseUrl/$_endpoint/${todo.id}');
-    print(url);
     var response = await http.delete(url, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
