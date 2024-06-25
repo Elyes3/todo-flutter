@@ -19,6 +19,7 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
   String _todoDescription = '';
   @override
   Widget build(BuildContext context) {
+    final todos = ref.watch(todosNotifierProvider).value;
     String date = dateFromMillis(widget.millis);
     return Scaffold(
         appBar: AppBar(
@@ -131,7 +132,7 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
               ),
               const SizedBox(height: 25),
             Container(
-              height: MediaQuery.of(context).size.height*0.5,
+              height: todos!.isEmpty ? MediaQuery.of(context).size.height*0.5 : null,
               width : MediaQuery.of(context).size.width,
               alignment: Alignment.center,
               child: const TodoList())
