@@ -38,3 +38,5 @@ After that you need to run the project on the device of your choice:
     Through an event called from the view, the UI calls the provider. The provider then calls the service in order to load the data from the server. A loading state is shown during the server call. If the call resolves successfully. The data is shown in the UI else a snackbar displays an error message. In order to show the data inside the UI, the reactivity system of riverpod is used. For that, I made use of the notifier to update the state reactively depending on the return value of the server call that was made.
 
 -  In order to update a specific todo's description. You need to press on the todo. And the `description` of the todo will transform into a textfield. You can then edit it. When the textfield is out of focus. The `description` gets updated.
+
+PS: Sometimes disabling the firewall for private networks is needed to make the destination reachable.
