@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoflutter/home/home_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:todoflutter/todos/todos_page.dart';
+import 'package:todoflutter/todos/todos_service.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -13,7 +14,9 @@ void main() async {
 
 class AppModule extends Module {
   @override
-  void binds(i) {}
+  void binds(i) {
+   i.addSingleton(TodosService.new); 
+  }
   @override
   void routes(r) {
     r.child('/', child: (_) => const HomePage());
@@ -30,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Todo Flutter',
+      debugShowCheckedModeBanner: false,
       routerConfig: Modular.routerConfig,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

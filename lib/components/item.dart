@@ -84,7 +84,7 @@ class _TodoItemState extends ConsumerState<TodoItem> {
                     ElevatedButton(
                         style: const ButtonStyle(
                             backgroundColor:
-                                WidgetStatePropertyAll(Colors.red)),
+                                MaterialStatePropertyAll(Colors.red)),
                         onPressed: () async {
                           await ref
                               .read(todosNotifierProvider.notifier)

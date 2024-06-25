@@ -38,7 +38,11 @@ class TodoList extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(child: Text('Error: $error')),
+      error: (error, stack){
+        final snackbar =  SnackBar(content: Text('$error'));
+         WidgetsBinding.instance.addPostFrameCallback((_) => ScaffoldMessenger.of(context).showSnackBar(snackbar));
+        return Container();
+      }
     );
   }
 }
