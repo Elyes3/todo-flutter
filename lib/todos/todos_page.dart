@@ -54,7 +54,9 @@ class _MyWidgetState extends ConsumerState<TodosPage> {
                               labelText: 'Type your todo',
                             )))),
                 ElevatedButton(
+                  
                   style: ElevatedButton.styleFrom(
+                    visualDensity: VisualDensity.standard,
                     backgroundColor: Colors.deepPurple,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
